@@ -1,0 +1,21 @@
+{
+    "name": "zabachok/yii2-vega",
+    "description": "Simple task tracker",
+    "type": "yii2-extension",
+    "keywords": ["yii2","task","tracker","vega"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniil Romanov",
+            "email": "zabachok@zabachok.net"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "zabachok\\vega\\": ""
+        }
+    }
+}
