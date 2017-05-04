@@ -15,6 +15,7 @@ class Module extends \yii\base\Module
     public $controllerNamespace = 'zabachok\vega\controllers';
     public $db          = 'db';
     public $usernameCallback;
+    public $defaultRoute = 'task';
 
     public function init()
     {
