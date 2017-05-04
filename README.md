@@ -21,6 +21,10 @@ or add
 
 to the require section of your `composer.json` file.
 
+## Installation
+```
+./yii migrate --migrationPath=@vendor/zabachok/vega/migrations
+```
 
 Usage
 -----
