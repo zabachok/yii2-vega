@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace zabachok\vega\models;
 
 use Yii;
 
@@ -9,8 +9,8 @@ use Yii;
  *
  * @property integer $period_id
  * @property integer $task_id
- * @property string $start
- * @property string $end
+ * @property integer $start
+ * @property integer $end
  * @property integer $length
  */
 class Period extends \yii\db\ActiveRecord
@@ -29,8 +29,7 @@ class Period extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'length'], 'integer'],
-            [['start', 'end'], 'safe'],
+            [['task_id', 'start', 'end', 'length'], 'integer'],
         ];
     }
 

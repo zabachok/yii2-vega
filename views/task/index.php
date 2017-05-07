@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use zabachok\vega\models\Task;
 
 /* @var $this yii\web\View */
 /* @var $searchModel zabachok\vega\models\TaskSearch */
@@ -23,26 +22,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
             'task_id',
-            'title',
+            'project_id',
             'created_at',
             'updated_at',
-            [
-                'attribute' => 'status',
-                'value' => function ($model) {
-                    return Task::$statuses[$model->status];
-                },
-            ],
-            [
-                'attribute' => 'priority',
-                'value' => function ($model) {
-                    return Task::$priorities[$model->priority];
-                },
-            ],
-            // 'owner',
-            // 'worker',
-            // 'type',
-            // 'time:datetime',
+            'closed_at',
+            // 'status',
+            // 'priority',
+            // 'title',
             // 'description:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],

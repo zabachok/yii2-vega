@@ -5,12 +5,12 @@ namespace zabachok\vega\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use zabachok\vega\models\Task;
+use zabachok\vega\models\Project;
 
 /**
- * TaskSearch represents the model behind the search form about `zabachok\vega\models\Task`.
+ * ProjectSearch represents the model behind the search form about `zabachok\vega\models\Project`.
  */
-class TaskSearch extends Task
+class ProjectSearch extends Project
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class TaskSearch extends Task
     public function rules()
     {
         return [
-            [['task_id', 'project_id', 'created_at', 'updated_at', 'closed_at', 'status', 'priority'], 'integer'],
-            [['title', 'description'], 'safe'],
+            [['project_id', 'created_at', 'status'], 'integer'],
+            [['color'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class TaskSearch extends Task
      */
     public function search($params)
     {
-        $query = Task::find();
+        $query = Project::find();
 
         // add conditions that should always apply here
 
@@ -59,17 +59,12 @@ class TaskSearch extends Task
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'task_id' => $this->task_id,
             'project_id' => $this->project_id,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'closed_at' => $this->closed_at,
             'status' => $this->status,
-            'priority' => $this->priority,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'color', $this->color]);
 
         return $dataProvider;
     }
