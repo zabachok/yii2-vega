@@ -9,6 +9,7 @@ class m170430_091929_vega extends Migration
         $this->createTable('vega_project', [
             'project_id'=>$this->primaryKey(),
             'created_at'=>$this->integer(),
+            'name'=>$this->string(),
             'color'=>$this->string(6),
             'status'=>$this->integer(),
         ]);
@@ -49,6 +50,7 @@ class m170430_091929_vega extends Migration
             'start' => $this->integer(),
             'end' => $this->integer(),
             'length' => $this->integer(),
+            'comment' => $this->string(),
         ]);
         $this->createIndex('task', 'vega_period', [
             'task_id',

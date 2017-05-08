@@ -3,6 +3,8 @@
 namespace zabachok\vega\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "vega_task_log".
@@ -16,6 +18,15 @@ use Yii;
  */
 class TaskLog extends \yii\db\ActiveRecord
 {
+    public static $seeAttributes = [
+        'status',
+        'priority',
+        'project_id',
+        'description',
+        'title',
+        'closed_at',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -48,5 +59,34 @@ class TaskLog extends \yii\db\ActiveRecord
             'from' => 'From',
             'to' => 'To',
         ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => false,
+                'value' => new Expression('UNIX_TIMESTAMP()'),
+            ],
+        ];
+    }
+
+    public static function touch($model, $changedAttributes)
+    {
+        foreach ($changedAttributes as $key => $value) {
+            if (!in_array($key, self::$seeAttributes)) {
+                continue;
+            }
+            $log = new TaskLog();
+            $log->attributes = [
+                'task_id' => $model->task_id,
+                'param' => $key,
+                'from' => $value,
+                'to' => $model->getOldAttribute($key),
+            ];
+            $log->save();
+        }
     }
 }

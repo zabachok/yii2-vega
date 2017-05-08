@@ -1,6 +1,6 @@
 Vega is the task tracker
 ========================
-Simple task tracker
+Simple personal task tracker
 
 Installation
 ------------
@@ -21,15 +21,37 @@ or add
 
 to the require section of your `composer.json` file.
 
-## Installation
+Then run module migration:
 ```
 ./yii migrate --migrationPath=@vendor/zabachok/vega/migrations
 ```
 
-Usage
------
+## Activating
 
-Once the extension is installed, simply use it in your code by  :
+Add to you config file:
 
 ```php
-<?= \zabachok\vega\AutoloadExample::widget(); ?>```
+'modules' => [
+    ...
+    'vega'     => [
+        'class'     => 'zabachok\vega\Module',
+    ],
+]
+```
+and to your menu:
+
+```php
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-left'],
+        'items' => [
+        ...
+            [
+                'label' => 'Tasks',
+                'items' => [
+                    ['label' => 'Projects', 'url' => ['/vega/project/index']],
+                    ['label' => 'Tasks', 'url' => ['/vega/task/index']],
+                ],
+            ]
+        ],
+    ]);
+```

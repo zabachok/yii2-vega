@@ -8,6 +8,7 @@ use zabachok\vega\models\TaskSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use zabachok\vega\models\Period;
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -49,10 +50,10 @@ class TaskController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($task_id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($task_id),
         ]);
     }
 
@@ -61,12 +62,14 @@ class TaskController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($project_id = null)
     {
         $model = new Task();
+        if(!empty($project_id)) $model->project_id = $project_id;
+        $model->priority = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->task_id]);
+            return $this->redirect(['view', 'task_id' => $model->task_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +88,7 @@ class TaskController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->task_id]);
+            return $this->redirect(['view', 'task_id' => $model->task_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -104,6 +107,33 @@ class TaskController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionTimer($action, $task_id)
+    {
+        $model = $this->findModel($task_id);
+        $period = Period::touch($model, $action);
+        if($action == 'play' || $period == null)
+        {
+            return $this->redirect(['view', 'task_id' => $model->task_id]);
+        }else{
+            return $this->redirect(['update-period', 'period_id' => $period->period_id]);
+        }
+    }
+
+    public function actionUpdatePeriod($period_id)
+    {
+        if (($model = Period::findOne($period_id)) === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'task_id' => $model->task_id]);
+        } else {
+            return $this->render('update-period', [
+                'model'=>$model,
+            ]);
+        }
     }
 
     /**

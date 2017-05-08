@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->project_id), ['view', 'id' => $model->project_id]);
+            return Html::a(Html::encode($model->name), ['view', 'id' => $model->project_id]);
         },
     ]) ?>
 </div>

@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'project_id',
-            'created_at',
+            'name',
+            'created_at:datetime',
             'color',
             'status',
         ],
