@@ -53,7 +53,7 @@ class Task extends \yii\db\ActiveRecord
             [['project_id', 'title',], 'required'],
             [['project_id', 'created_at', 'updated_at', 'closed_at', 'status', 'priority'], 'integer'],
             [['description'], 'string'],
-            [['title'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 46],
             [['project_id', 'status', 'priority'], 'filter', 'filter' => 'intval']
         ];
     }

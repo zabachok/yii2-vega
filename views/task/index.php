@@ -8,7 +8,7 @@ use zabachok\vega\models\Task;
 /* @var $searchModel zabachok\vega\models\TaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tasks';
+$this->title = 'Задачи';
 $this->params['breadcrumbs'][] = $this->title;
 if (is_null($searchModel->project_id)) {
     $createUri = ['create'];

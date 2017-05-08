@@ -47,6 +47,13 @@ class TaskSearch extends Task
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'priority' => SORT_DESC,
+                    'status' => SORT_DESC,
+                    'updated_at' => SORT_DESC,
+                ],
+            ],
         ]);
 
         $this->load($params);
@@ -57,6 +64,15 @@ class TaskSearch extends Task
             return $dataProvider;
         }
 
+        if (empty($this->status)) {
+            $status = Task::$statuses;
+            unset($status['3']);
+            unset($status['4']);
+            $status = array_keys($status);
+        } else {
+            $status = $this->status;
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'task_id' => $this->task_id,
@@ -64,7 +80,7 @@ class TaskSearch extends Task
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'closed_at' => $this->closed_at,
-            'status' => $this->status,
+            'status' => $status,
             'priority' => $this->priority,
         ]);
 

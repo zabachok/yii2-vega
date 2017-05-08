@@ -15,6 +15,9 @@ use zabachok\vega\models\Period;
  */
 class TaskController extends Controller
 {
+
+    public $layout = 'main';
+
     /**
      * @inheritdoc
      */
@@ -65,11 +68,13 @@ class TaskController extends Controller
     public function actionCreate($project_id = null)
     {
         $model = new Task();
-        if(!empty($project_id)) $model->project_id = $project_id;
+        if (!empty($project_id)) {
+            $model->project_id = $project_id;
+        }
         $model->priority = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'task_id' => $model->task_id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -113,10 +118,13 @@ class TaskController extends Controller
     {
         $model = $this->findModel($task_id);
         $period = Period::touch($model, $action);
-        if($action == 'play' || $period == null)
-        {
-            return $this->redirect(['view', 'task_id' => $model->task_id]);
-        }else{
+        if ($action == 'play' || $period == null) {
+            if ($action == 'stop') {
+                return $this->redirect(['index',]);
+            } else {
+                return $this->redirect(['view', 'task_id' => $model->task_id]);
+            }
+        } else {
             return $this->redirect(['update-period', 'period_id' => $period->period_id]);
         }
     }
@@ -131,7 +139,7 @@ class TaskController extends Controller
             return $this->redirect(['view', 'task_id' => $model->task_id]);
         } else {
             return $this->render('update-period', [
-                'model'=>$model,
+                'model' => $model,
             ]);
         }
     }

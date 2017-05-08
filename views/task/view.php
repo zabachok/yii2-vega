@@ -8,7 +8,7 @@ use zabachok\vega\models\Task;
 /* @var $model zabachok\vega\models\Task */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Задачи', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \zabachok\vega\assets\VegaAsset::register($this);
 ?>
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-6">
             <h2>Таймер</h2>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="btn-group" role="group">
                         <?php if (in_array($model->status,
                             [0, 2])) echo Html::a('<i class="fa fa-play" aria-hidden="true"></i>',
