@@ -23,7 +23,7 @@ to the require section of your `composer.json` file.
 
 Then run module migration:
 ```
-./yii migrate --migrationPath=@vendor/zabachok/vega/migrations
+./yii migrate --migrationPath=@vendor/zabachok/yii2-vega/migrations
 ```
 
 ## Activating

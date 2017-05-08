@@ -95,7 +95,7 @@ class Task extends \yii\db\ActiveRecord
 
     public function afterSave($insert, $changedAttributes)
     {
-        TaskLog::touch($this, $changedAttributes);
+        if(!$insert) TaskLog::touch($this, $changedAttributes);
     }
 
     public function getLog()

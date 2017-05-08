@@ -117,13 +117,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-12">
                     <?php
-                    $time = 0;
-                    foreach ($model->log as $item) {
-                        if ($time != date('Y-m-d H', $item->created_at)) {
-                            $time = date('Y-m-d H', $item->created_at);
-                            echo '<b>' . \Yii::$app->formatter->asDate($item->created_at) . '</b><br>';
+                    if (!empty($model->log)) {
+                        $time = 0;
+                        foreach ($model->log as $item) {
+                            if ($time != date('Y-m-d H', $item->created_at)) {
+                                $time = date('Y-m-d H', $item->created_at);
+                                echo '<b>' . \Yii::$app->formatter->asDate($item->created_at) . '</b><br>';
+                            }
+                            echo $this->render('_log', ['model' => $item, 'task' => $model]);
                         }
-                        echo $this->render('_log', ['model' => $item, 'task' => $model]);
                     }
                     ?>
                 </div>
